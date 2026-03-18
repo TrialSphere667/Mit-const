@@ -1,0 +1,73 @@
+Hi [Name],
+
+Thanks for sharing the examples — this is really helpful context, and I agree that the current outputs highlight some of the limitations of both template-driven and pattern-based approaches.
+
+One approach that may help address this is to anchor generation more directly to the source-of-truth (i.e., the CSP), while introducing an intermediate structured extraction step.
+
+Rather than generating the Study Design section directly from the template or from full CSP text, the workflow could be structured as follows:
+
+1. Define the key elements that should be described in the Study Design section (e.g., design type, treatment arms, population, randomization/blinding, duration, endpoints)
+2. Extract these elements in a structured way from the relevant CSP section (e.g., Section 3.1), rather than treating it as free text
+3. Generate the CSR Study Design narrative from these structured elements, using prior CSR examples only to guide phrasing and tone
+4. Verify the generated text back against the CSP to ensure all content is supported and no key elements are missing
+
+This helps address a few of the challenges you noted:
+
+- reduces reliance on generalized templates
+- avoids overfitting to prior CSR patterns
+- ensures the output remains grounded in the actual study design
+
+It also provides a more consistent framework for handling variability across studies, while still allowing flexibility in level of detail.
+
+Happy to walk through this in more detail if helpful — I think this could be a strong direction for improving the current outputs.
+
+Hi [Name],
+
+That’s a great observation, and the variability you’re seeing is actually expected rather than an indication of inconsistency.
+
+In practice, the level of detail included in the Study Design section of a CSR is intentionally adapted based on the specific study. Factors such as study phase, design complexity, presence of novel or adaptive elements, and overlap with other sections all influence how much detail is included. As a result, some CSRs closely mirror the CSP in terms of detail, while others provide a more concise summary.
+
+Because of this, trying to standardize the section to a single fixed level of detail can be challenging and may not be desirable. Instead, it may be more useful to think in terms of different “levels of detail” that can be applied depending on the context:
+
+- Expanded: more detailed, closer to CSP-level description (e.g., complex or early-phase studies)
+- Standard: balanced level of detail covering key design elements
+- Abbreviated: concise summary when the design is straightforward or described elsewhere
+
+From a system design perspective, this could be implemented by:
+
+1. Defining the core elements that should be present in the Study Design section
+2. Mapping those elements to source-of-truth documents (e.g., CSP, SAP)
+3. Allowing the level of detail to be adjusted (either via user selection or guided by rules), rather than enforcing a single format
+
+This approach would help account for the variability you’re observing while still maintaining consistency in terms of content and structure.
+
+Happy to discuss further — I think this is an important aspect to get right for overall system behavior.
+
+Best,
+[Your Name]
+
+Hi [Name],
+
+Yes — I think the idea of evaluating multiple approved CSRs to identify common elements within a given section is a very reasonable approach, particularly for teams that may not yet have strong intuition around how these sections are constructed.
+
+One way to frame this is to use prior CSRs to identify the underlying schema of a section (i.e., what information elements are consistently described), rather than using them directly as inputs for content generation. For example, across Study Design sections, you’ll typically see recurring elements such as design type, treatment arms, population, randomization/blinding, study duration, and endpoints.
+
+Once those elements are defined, the next step would be to map each of them back to their source-of-truth documents (e.g., CSP, SAP, study schema). Generation can then be driven by extracting these structured elements from the appropriate sources and assembling them into a narrative, with prior CSR examples used only to guide structure, phrasing, and tone.
+
+This helps avoid two common issues:
+
+- Template-driven generation being too generic
+- Pattern-based generation not being grounded in the actual study inputs
+
+In practice, this becomes a three-step process:
+
+1. Use approved CSRs to define what information belongs in a section
+2. Map each element to its source-of-truth
+3. Generate the section from extracted study-specific inputs, guided by CSR patterns
+
+I think this hybrid approach may help reduce the variability you’re seeing while still preserving the flexibility needed across different studies.
+
+Happy to discuss further — I think this is a key piece of the overall system design.
+
+Best,
+[Your Name]
